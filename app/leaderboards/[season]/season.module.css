@@ -1,0 +1,394 @@
+.container {
+    padding: 40px 16px;
+    max-width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+    margin: 25px 0px;
+  }
+  
+  .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+    animation: shimmer 3s infinite;
+  }
+  
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #38bdf8;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    position: relative;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes titleGlow {
+    from { text-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+    to { text-shadow: 0 0 30px rgba(56, 189, 248, 0.8), 0 0 40px rgba(56, 189, 248, 0.6); }
+  }
+  
+
+  
+
+  
+  .players {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    perspective: 1000px;
+  }
+  
+  .player-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .player-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #38bdf8, #7c3aed, #38bdf8);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .player-card:hover {
+    transform: translateY(-5px) rotateX(2deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .player-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  /* Tablet (>=600px) */
+  @media (min-width: 600px) {
+    .container {
+      padding: 60px 20px;
+    }
+  
+    .title {
+      font-size: 2rem;
+    }
+  
+    .tabs {
+      gap: 12px;
+      justify-content: center;
+      overflow-x: visible;
+    }
+  
+    .tab {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+    }
+  
+    .players {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+  
+  /* Desktop (>=900px) */
+  @media (min-width: 900px) {
+    .container {
+      padding: 80px 20px;
+      max-width: 1200px;
+    }
+  
+    .title {
+      font-size: 2.5rem;
+      margin-bottom: 32px;
+    }
+  
+    .tabs {
+      gap: 16px;
+    }
+  
+    .tab {
+      padding: 14px 24px;
+      font-size: 1rem;
+    }
+  
+    .players {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    
+    .player-card {
+      padding: 24px;
+    }
+  }
+  
+  /* Enhanced animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .player-card {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  
+  .player-card:nth-child(2) { animation-delay: 0.1s; }
+  .player-card:nth-child(3) { animation-delay: 0.2s; }
+  .player-card:nth-child(4) { animation-delay: 0.3s; }
+  .player-card:nth-child(5) { animation-delay: 0.4s; }
+  .player-card:nth-child(6) { animation-delay: 0.5s; }
+  
+  /* Coming soon message styling */
+  .container > p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Wrapper for filter + tabs */
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  /* Tournament Filter */
+  .filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .filter label {
+    color: #ededed; /* aqua-blue, matches title theme */
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+    letter-spacing: 0.5px;
+  }
+  
+  .filter select {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 25px;
+    padding: 10px 16px;
+    color: #ededed;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 160px;
+    outline: none;
+  }
+  
+  .filter select:hover {
+    background: rgba(56, 189, 248, 0.15);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.25);
+    transform: translateY(-1px) scale(1.02);
+  }
+  
+  .filter select:focus {
+    border: 1px solid #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+  }
+  
+/* Tabs Container */
+.tabs {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    padding: 3px;
+    margin-bottom: 24px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: relative;
+  }
+  
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Individual Tab */
+  .tab {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.80rem;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    overflow: hidden;
+    z-index: 1;
+    /* Remove transition to prevent hover-like effects */
+    transition: none;
+  }
+  
+  /* Remove the hover effect with moving gradient */
+  .tab::before {
+    display: none; /* This removes the sliding gradient effect */
+  }
+  
+  /* Active Tab with advanced animation */
+  .tab.active {
+    background: linear-gradient(135deg, #38bdf8, #2563eb, #7c3aed);
+    font-weight: 600;
+    transform: translateY(-2px);
+    animation: activePulse 2s ease-in-out infinite;
+    position: relative;
+  }
+  
+  @keyframes activePulse {
+    0%, 100% {
+      background: linear-gradient(135deg, #38bdf8, #2563eb, #7c3aed);
+      transform: translateY(-2px) scale(1);
+    }
+    50% {
+      background: linear-gradient(135deg, #38bdf8, #3b82f6, #7c3aed);
+      transform: translateY(-2px) scale(1.03);
+    }
+  }
+  
+  /* Glowing border effect for active tab */
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #38bdf8, #2563eb, #7c3aed, #38bdf8);
+    border-radius: 27px;
+    z-index: -2;
+    animation: borderGlow 2s ease-in-out infinite;
+    filter: blur(4px);  
+  }
+  
+  @keyframes borderGlow {
+    0%, 100% {
+      opacity: 0.7;
+      filter: blur(4px);
+    }
+    50% {
+      opacity: 1;
+      filter: blur(6px);
+    }
+  }
+  
+  /* Active tab text shine effect */
+  .tab.active span {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tab.active span::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.4), 
+      transparent);
+    animation: textShine 2s ease-in-out infinite;
+  }
+  
+  @keyframes textShine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+  
+  /* Focus state for accessibility */
+  .tab:focus {
+    outline: none;
+  }
+  
+  /* Remove any browser default active states */
+  .tab:active {
+    transform: none !important;
+  }
+  
+  .tab:focus:not(.active) {
+    transform: none !important;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .tabs {
+      gap: 5px;
+      padding: 2px;
+    }
+    
+    .tab {
+      padding: 10px 16px;
+      font-size: 0.8rem;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .tab.active,
+    .tab.active::after,
+    .tab.active span::after {
+      animation: none;
+    }
+    
+    .tab.active {
+      transform: translateY(-2px);
+    }
+  }
+  /* Desktop layout: filter + tabs inline */
+  @media (min-width: 768px) {
+    .controls {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+    .filter {
+      margin-right: auto;
+    }
+  }
+  
