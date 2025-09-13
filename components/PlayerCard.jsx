@@ -53,7 +53,7 @@ export default function PlayerCard({ player, rank, tab }) {
         {tab === "mvp" && (
           <>
             <p>
-              <strong>Avg Points : </strong> <span>{player.total.toFixed(1)}</span>
+              <strong>Avg Points : </strong> <span>{Number(player.total).toFixed(1)}</span>
             </p>
             {/* <p>
               <strong>Total : </strong>{" "}
