@@ -32,8 +32,8 @@ export default function PlayerCard({ player, rank, tab, datasets, selectedTourna
         result.batting = {
           runs: battingPlayer.total_runs,
           strikeRate: battingPlayer.strike_rate,
-          fours: battingPlayer["4s"],
-          sixes: battingPlayer["6s"],
+          fours: battingPlayer.fours,
+          sixes: battingPlayer.sixes,
           highestRun: battingPlayer.highest_run,
           innings: battingPlayer.innings
         };

@@ -10,8 +10,8 @@ export function computeOverallBatting(datasets) {
         total_runs: Number(player.total_runs) || 0,
         innings: Number(player.innings) || 0,
         not_outs: Number(player.not_outs) || 0,
-        fours: Number(player.fours) || 0,
-        sixes: Number(player.sixes) || 0,
+        fours: Number(player["4s"]) || 0,
+        sixes: Number(player["6s"]) || 0,
         highest_score: Number(player.highest_score) || 0,
         average: Number(player.average) || 0,
         strike_rate: Number(player.strike_rate) || 0,
@@ -28,7 +28,7 @@ export function computeOverallBatting(datasets) {
       } else {
         const existing = merged[player.player_id];
         const tracker = trackers[player.player_id];
-  
+        // console.log(normalized,"normalized")
         existing.total_runs += normalized.total_runs;
         existing.innings += normalized.innings;
         existing.not_outs += normalized.not_outs;
