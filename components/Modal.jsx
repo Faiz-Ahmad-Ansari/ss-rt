@@ -16,13 +16,13 @@ import {
 } from "@mui/material";
 
 export default function PlayerModal({
-  open,
-  onClose,
-  playerName,
-  profilePhoto,
-  stats,
-  defaultTab = "batting",
-}) {
+    open,
+    onClose,
+    playerName,
+    profilePhoto,
+    stats,
+    defaultTab = "batting",
+  }) {
   const tabMapping = { batting: 0, bowling: 1, fielding: 2, mvp: 3 };
   const tabNames = ["Batting", "Bowling", "Fielding", "MVP"];
   const [tab, setTab] = useState(tabMapping[defaultTab] || 0);
@@ -38,6 +38,19 @@ export default function PlayerModal({
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   // Custom SVG Icons (no external dependency needed)
+
+  const CloseIcon = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="20"
+      viewBox="0 0 24 24"
+      width="20"
+      fill="currentColor"
+    >
+      <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+    </svg>
+  );
+
   const ChevronLeftIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
       <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12Z" />
@@ -87,7 +100,7 @@ export default function PlayerModal({
   };
 
   // Helper function to safely get nested values
-  const getSafeValue = (path, fallback = "N/A") => {
+  const getSafeValue = (path, fallback = "0") => {
     try {
       return path || fallback;
     } catch (error) {
@@ -144,7 +157,6 @@ export default function PlayerModal({
           overflow: "hidden",
           position: "relative",
           height: isMobile ? "78vh" : "auto",
-        //   width: isMobile ? "95vw" : "auto",
         },
       }}
     >
@@ -160,8 +172,29 @@ export default function PlayerModal({
         }}
       />
 
-      {/* Player Info */}
-      <DialogTitle sx={{ textAlign: "center", pb: 1, pt: isMobile ? 3 : 2 }}>
+      {/* Player Info with Close Button */}
+      <DialogTitle
+        sx={{
+          textAlign: "center",
+          pb: 1,
+          pt: isMobile ? 3 : 2,
+          position: "relative",
+        }}
+      >
+        {/* Close Button (Top-Right) */}
+        <IconButton
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: "rgba(148,163,184,0.8)",
+            "&:hover": { color: "#22c55e" },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+
         <Avatar
           src={profilePhoto}
           alt={playerName}
@@ -172,28 +205,23 @@ export default function PlayerModal({
             mb: 1,
             border: "2px solid #22c55e",
             boxShadow: "0 0 15px rgba(34, 197, 94, 0.4)",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              transform: "scale(1.05)",
-              boxShadow: "0 0 20px rgba(34, 197, 94, 0.6)",
-            },
           }}
         />
         <Typography
-          variant={isMobile ? "h5" : "h6"}
-          fontWeight="700"
-          sx={{
+        variant={isMobile ? "h5" : "h6"}
+        component="span"   // ✅ Fix: no nested heading, just a span
+        fontWeight="700"
+        sx={{
             background: "linear-gradient(135deg, #22c55e, #3b82f6)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             textShadow: "0 0 10px rgba(34, 197, 94, 0.3)",
-          }}
+        }}
         >
-          {playerName}
+                {playerName}
         </Typography>
       </DialogTitle>
-
       <DialogContent sx={{ pt: 0, pb: isMobile ? 2 : 1 }}>
         {/* Mobile Tab Navigation with Swipe Indicator */}
         {isMobile && (
@@ -205,7 +233,7 @@ export default function PlayerModal({
                 fontSize: "0.75rem"
               }}
             >
-              ← Swipe to navigate or use arrows →
+              ← use arrows to navigate →
             </Typography>
           </Box>
         )}
@@ -317,49 +345,165 @@ export default function PlayerModal({
         </Box>
 
         {/* Tab Panels */}
+        {/* {console.log(stats,"stats")} */}
         <Box sx={{ minHeight: isMobile ? "300px" : "200px" }}>
           <TabPanel value={tab} index={0}>
-            <Box>
-              <Box sx={{ mb: 3 }}>
-                <Typography sx={{ 
-                  color: "#22c55e", 
-                  fontWeight: 600, 
-                  mb: 0.5,
-                  fontSize: isMobile ? "1rem" : "0.875rem"
-                }}>
-                  Runs:
-                </Typography>
-                <Typography sx={{ 
-                  color: "#fff", 
-                  fontSize: isMobile ? "2rem" : "24px", 
-                  fontWeight: 700 
-                }}>
-                  {getSafeValue(stats?.batting?.runs)}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography sx={{ 
-                  color: "#22c55e", 
-                  fontWeight: 600, 
-                  mb: 0.5,
-                  fontSize: isMobile ? "1rem" : "0.875rem"
-                }}>
-                  Strike Rate:
-                </Typography>
-                <Typography sx={{ 
-                  color: "#fff", 
-                  fontSize: isMobile ? "2rem" : "24px", 
-                  fontWeight: 700 
-                }}>
-                  {getSafeValue(stats?.batting?.strikeRate)}
-                </Typography>
-              </Box>
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
+                    gap: 2, // spacing between items
+                }}
+                >
+                {/* Runs */}
+                <Box>
+                    <Typography
+                    sx={{
+                        color: "#22c55e",
+                        fontWeight: 600,
+                        mb: 0.5,
+                        fontSize: isMobile ? "1rem" : "0.875rem",
+                    }}
+                    >
+                    Runs:
+                    </Typography>
+                    <Typography
+                    sx={{
+                        color: "#fff",
+                        fontSize: isMobile ? "2rem" : "24px",
+                        fontWeight: 700,
+                    }}
+                    >
+                    {getSafeValue(stats?.batting?.runs)}
+                    </Typography>
+                </Box>
+
+                {/* Strike Rate */}
+                <Box>
+                    <Typography
+                    sx={{
+                        color: "#22c55e",
+                        fontWeight: 600,
+                        mb: 0.5,
+                        fontSize: isMobile ? "1rem" : "0.875rem",
+                    }}
+                    >
+                    Strike Rate:
+                    </Typography>
+                    <Typography
+                    sx={{
+                        color: "#fff",
+                        fontSize: isMobile ? "2rem" : "24px",
+                        fontWeight: 200,
+                    }}
+                    >
+                    {getSafeValue(stats?.batting?.strikeRate)}
+                    </Typography>
+                </Box>
+
+                <Box>
+                    <Typography
+                    sx={{
+                        color: "#22c55e",
+                        fontWeight: 600,
+                        mb: 0.5,
+                        fontSize: isMobile ? "1rem" : "0.875rem",
+                    }}
+                    >
+                    Innings:
+                    </Typography>
+                    <Typography
+                    sx={{
+                        color: "#fff",
+                        fontSize: isMobile ? "2rem" : "24px",
+                        fontWeight: 200,
+                    }}
+                    >
+                    {getSafeValue(stats?.batting?.innings)}
+                    </Typography>
+                </Box>
+
+                <Box>
+                    <Typography
+                    sx={{
+                        color: "#22c55e",
+                        fontWeight: 600,
+                        mb: 0.5,
+                        fontSize: isMobile ? "1rem" : "0.875rem",
+                    }}
+                    >
+                    Highest Runs:
+                    </Typography>
+                    <Typography
+                    sx={{
+                        color: "#fff",
+                        fontSize: isMobile ? "2rem" : "24px",
+                        fontWeight: 200,
+                    }}
+                    >
+                    {getSafeValue(stats?.batting?.highestRun)}
+                    </Typography>
+                </Box>
+
+                   {/* Sixes */}
+                   <Box>
+                    <Typography
+                    sx={{
+                        color: "#22c55e",
+                        fontWeight: 600,
+                        mb: 0.5,
+                        fontSize: isMobile ? "1rem" : "0.875rem",
+                    }}
+                    >
+                    Sixes:
+                    </Typography>
+                    <Typography
+                    sx={{
+                        color: "#fff",
+                        fontSize: isMobile ? "2rem" : "24px",
+                        fontWeight: 200,
+                    }}
+                    >
+                    {getSafeValue(stats?.batting?.sixes)}
+                    </Typography>
+                </Box>
+
+                {/* Fours */}
+                <Box>
+                    <Typography
+                    sx={{
+                        color: "#22c55e",
+                        fontWeight: 600,
+                        mb: 0.5,
+                        fontSize: isMobile ? "1rem" : "0.875rem",
+                    }}
+                    >
+                    Fours:
+                    </Typography>
+                    <Typography
+                    sx={{
+                        color: "#fff",
+                        fontSize: isMobile ? "2rem" : "24px",
+                        fontWeight: 200,
+                    }}
+                    >
+                    {getSafeValue(stats?.batting?.fours)}
+                    </Typography>
+                </Box>
+
+             
             </Box>
           </TabPanel>
-
+{/* Bowling */}
           <TabPanel value={tab} index={1}>
-            <Box>
-              <Box sx={{ mb: 3 }}>
+            <Box
+             sx={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
+                gap: 2, // spacing between items
+            }}
+            >
+              <Box>
                 <Typography sx={{ 
                   color: "#22c55e", 
                   fontWeight: 600, 
@@ -383,22 +527,97 @@ export default function PlayerModal({
                   mb: 0.5,
                   fontSize: isMobile ? "1rem" : "0.875rem"
                 }}>
+                  Overs Bowled:
+                </Typography>
+                <Typography sx={{ 
+                  color: "#fff", 
+                  fontSize: isMobile ? "2rem" : "24px", 
+                  fontWeight: 200 
+                }}>
+                  {getSafeValue(stats?.bowling?.overs)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ 
+                  color: "#22c55e", 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: isMobile ? "1rem" : "0.875rem"
+                }}>
                   Economy:
+                </Typography>
+                <Typography sx={{ 
+                  color: "#fff", 
+                  fontSize: isMobile ? "2rem" : "24px", 
+                  fontWeight: 200 
+                }}>
+                  {getSafeValue(stats?.bowling?.economy)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ 
+                  color: "#22c55e", 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: isMobile ? "1rem" : "0.875rem"
+                }}>
+                  Highest Wickets:
+                </Typography>
+                <Typography sx={{ 
+                  color: "#fff", 
+                  fontSize: isMobile ? "2rem" : "24px", 
+                  fontWeight: 200 
+                }}>
+                  {getSafeValue(stats?.bowling?.highestWkts)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ 
+                  color: "#22c55e", 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: isMobile ? "1rem" : "0.875rem"
+                }}>
+                  Dot Balls:
+                </Typography>
+                <Typography sx={{ 
+                  color: "#fff", 
+                  fontSize: isMobile ? "2rem" : "24px", 
+                  fontWeight: 200 
+                }}>
+                  {getSafeValue(stats?.bowling?.dotBalls)}
+                </Typography>
+              </Box>
+             
+            </Box>
+          </TabPanel>
+{/* Fielding */}
+          <TabPanel value={tab} index={2}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
+                gap: 2, // spacing between items
+            }}
+            >
+            <Box>
+                <Typography sx={{ 
+                  color: "#22c55e", 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: isMobile ? "1rem" : "0.875rem"
+                }}>
+                  Total Dismissals:
                 </Typography>
                 <Typography sx={{ 
                   color: "#fff", 
                   fontSize: isMobile ? "2rem" : "24px", 
                   fontWeight: 700 
                 }}>
-                  {getSafeValue(stats?.bowling?.economy)}
+                  {getSafeValue(stats?.fielding?.totalDismissals)}
                 </Typography>
               </Box>
-            </Box>
-          </TabPanel>
-
-          <TabPanel value={tab} index={2}>
-            <Box>
-              <Box sx={{ mb: 3 }}>
+              <Box>
                 <Typography sx={{ 
                   color: "#22c55e", 
                   fontWeight: 600, 
@@ -410,7 +629,7 @@ export default function PlayerModal({
                 <Typography sx={{ 
                   color: "#fff", 
                   fontSize: isMobile ? "2rem" : "24px", 
-                  fontWeight: 700 
+                  fontWeight: 200 
                 }}>
                   {getSafeValue(stats?.fielding?.catches)}
                 </Typography>
@@ -427,9 +646,26 @@ export default function PlayerModal({
                 <Typography sx={{ 
                   color: "#fff", 
                   fontSize: isMobile ? "2rem" : "24px", 
-                  fontWeight: 700 
+                  fontWeight: 200 
                 }}>
                   {getSafeValue(stats?.fielding?.runOuts)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ 
+                  color: "#22c55e", 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: isMobile ? "1rem" : "0.875rem"
+                }}>
+                  Stumpings:
+                </Typography>
+                <Typography sx={{ 
+                  color: "#fff", 
+                  fontSize: isMobile ? "2rem" : "24px", 
+                  fontWeight: 200 
+                }}>
+                  {getSafeValue(stats?.fielding?.stumping)}
                 </Typography>
               </Box>
             </Box>
