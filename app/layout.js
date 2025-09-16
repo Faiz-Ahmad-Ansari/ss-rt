@@ -1,6 +1,12 @@
 export const metadata = {
-  title: 'ssrt',
-  description: 'Cricket Records',
+  title: 'SS-RT',
+  description: 'SuperStrikers-RisingThunder Records',
+  manifest: "/manifest.json",
+  themeColor: "#000000",
+  icons: {
+    icon: "/strikersLogo.png", // one image used everywhere
+    apple: "/strikersLogo.png", // iOS will also use this
+  },
   };
   
   
