@@ -12,8 +12,8 @@ import {
 
 export default function PlayerCard({ player, rank, tab, datasets, selectedTournament }) {
   const [open, setOpen] = useState(false);
-
-  // prepare stats object for modal
+  
+// prepare stats object for modal
 //   console.log(datasets,"Player datasets")
 
   function getPlayerStats(datasets, playerName, selectedTournament) {
@@ -202,7 +202,7 @@ export default function PlayerCard({ player, rank, tab, datasets, selectedTourna
           {tab === "mvp" && (
             <>
               <p>
-                <strong>Avg Points : </strong>{" "}
+               {selectedTournament === "overall" ? <strong>Avg Points : </strong> : <strong>Points : </strong>}{" "}
                 <span>{Number(player.total).toFixed(1)}</span>
               </p>
             </>
