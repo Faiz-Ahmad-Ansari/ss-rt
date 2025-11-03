@@ -17,13 +17,13 @@ export default function Home() {
           icon="📊"
           // icon="🏆"
         />
-        {/* <Card
-          title="Player Stats"
-          body="Analyze individual player performance trends"
-          href="/stats"
-          icon="📊"
-        />
         <Card
+          title="Auction"
+          body="Auction player shuffle"
+          href="/auction"
+          icon="👥"
+        />
+        {/* <Card
           title="Matches"
           body="Review match history and performance highlights"
           href="/matches"
