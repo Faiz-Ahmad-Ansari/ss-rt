@@ -12,6 +12,7 @@ import {
 
 export default function PlayerCard({ player, rank, tab, datasets, selectedTournament }) {
   const [open, setOpen] = useState(false);
+  console.log(player,"player")
   
 // prepare stats object for modal
 //   console.log(datasets,"Player datasets")
@@ -28,6 +29,7 @@ export default function PlayerCard({ player, rank, tab, datasets, selectedTourna
       // ---- Batting ----
       const battingOverall = computeOverallBatting(datasets.batting || []);
       const battingPlayer = battingOverall.find(p => p.name === playerName);
+      console.log(battingPlayer,"battingPlayer")
       if (battingPlayer) {
         result.batting = {
           runs: battingPlayer.total_runs,
@@ -35,7 +37,9 @@ export default function PlayerCard({ player, rank, tab, datasets, selectedTourna
           fours: battingPlayer.fours,
           sixes: battingPlayer.sixes,
           highestRun: battingPlayer.highest_run,
-          innings: battingPlayer.innings
+          innings: battingPlayer.innings,
+          total_match: battingPlayer.total_match
+
         };
       }
   

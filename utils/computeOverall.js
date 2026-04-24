@@ -8,13 +8,14 @@ export function computeOverallBatting(datasets) {
       const normalized = {
         ...player,
         total_runs: Number(player.total_runs) || 0,
-        innings: Number(player.innings) || 0,
+        // innings: Number(player.innings) || 0,
         not_outs: Number(player.not_outs) || 0,
         fours: Number(player["4s"]) || 0,
         sixes: Number(player["6s"]) || 0,
         highest_score: Number(player.highest_score) || 0,
         average: Number(player.average) || 0,
         strike_rate: Number(player.strike_rate) || 0,
+        total_match: Number(player.total_match) || 0,
       };
   
       if (!merged[player.player_id]) {

@@ -19,9 +19,21 @@ export default function Home() {
         />
         <Card
           title="Auction"
-          body="Auction player shuffle"
+          body="Live public auction viewer"
           href="/auction"
           icon="👥"
+        />
+        <Card
+          title="Auction Admin"
+          body="Manage sold/unsold, undo, reset, and points"
+          href="/auction/admin"
+          icon="🛠️"
+        />
+        <Card
+          title="Finals Data"
+          body="Track players' finals appearances, wins, and runner-up records"
+          href="/finalsCount"
+          icon="🏆"
         />
         {/* <Card
           title="Matches"
